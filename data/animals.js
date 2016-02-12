@@ -1,0 +1,15 @@
+module.exports = [
+  "dragon",
+  "eagle",
+  "rat",
+  "ox",
+  "tiger",
+  "rabbit",
+  "snake",
+  "horse",
+  "goat",
+  "monkey",
+  "rooster",
+  "dog",
+  "pig",
+];
