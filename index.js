@@ -18,7 +18,7 @@ process.stdin.setEncoding('utf8');
 
 console.log(`This is the record of the lifelong researches of ${nameGen.male().ofLength(9).generate()},
 set upon the page so they may be preserved from the ravages of time and brought before the eyes of men
-to tell their tales of wonder and speak warning of dangers long forgotten.\n\nOptions:\nnames\nmyth\ngrid\nclose\n\n>`);
+to tell their tales of wonder and speak warning of dangers long forgotten.\n\nOptions:\nnames\nmyth\ngrid\nclose\n\n`);
 process.stdin.on('data', function (text) {
   if (text.match(/^close|^quit/i)) {
     done();
