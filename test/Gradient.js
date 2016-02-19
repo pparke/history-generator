@@ -3,7 +3,7 @@ let chai = require('chai');
 let assert = chai.assert;
 let should = chai.should();
 let Gradient = require('../lib/math/Gradient');
-
+let helpers = require('../lib/math/helpers');
 
 describe('Gradient', function() {
   let grad = new Gradient();
@@ -19,13 +19,15 @@ describe('Gradient', function() {
         max: 255
       };
 
-      let result = grad.linear(100, 100, direction, range);
-      result.should.have.length(100);
-      result[0].should.have.length(100);
+      let result = grad.linear(20, 20, direction, range);
+      result.should.have.length(20);
+      result[0].should.have.length(20);
       result[0][0].should.be.a('number');
       assert.equal(result[0][0] >= 0, true);
       assert.equal(result[0][0] <= 255, true);
       console.log(result)
+
+      console.log(helpers.normalize(result));
     });
   });
 });
