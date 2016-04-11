@@ -1,12 +1,13 @@
 'use strict';
 
-let NameGen   = require('./lib/language/NameGen');
-let Menu      = require('./lib/ui/Menu');
-let util      = require('util');
+const NameGen   = require('./lib/language/NameGen');
+const Menu      = require('./lib/ui/Menu');
+const util      = require('util');
+const path      = require('path');
 
-let nameGen = new NameGen();
+const nameGen = new NameGen();
 
-// stding starts off paused
+// stdin starts off paused
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
 
@@ -18,5 +19,5 @@ to tell their tales of wonder and speak warning of dangers long forgotten.`);
 /**
 * Menu
 */
-let menu = new Menu(__dirname);
+const menu = new Menu(path.join(__dirname, 'output'));
 process.stdin.on('data', menu.mainHandler.bind(menu));
