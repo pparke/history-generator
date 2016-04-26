@@ -1,7 +1,8 @@
 node_modules/
 output/
-dist/*.bundle.js
+dist/
 *.png
 *.jpg
 *.dat
 reference/
+.remote-sync.json
