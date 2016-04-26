@@ -6,3 +6,4 @@ dist/
 *.dat
 reference/
 .remote-sync.json
+npm-debug.log
