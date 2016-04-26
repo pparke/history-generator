@@ -1,6 +1,6 @@
 node_modules/
 output/
-dist/
+dist/*.bundle.js
 *.png
 *.jpg
 *.dat
