@@ -1,14 +1,15 @@
 'use strict';
 
-const RandomDataGenerator = require('./lib/math/RandomDataGenerator');
-const NameGen             = require('./lib/language/NameGen');
-const Myth                = require('./lib/language/Myth');
+
+const RandomDataGenerator = require('../lib/math/RandomDataGenerator');
+const NameGen             = require('../lib/language/NameGen');
+const Myth                = require('../lib/language/Myth');
 const util                = require('util');
+const helpers             = require('../lib/math/helpers');
 
 const nameGen = new NameGen();
 const myth    = new Myth();
 const random  = new RandomDataGenerator([374847367262647]);
-//random.sow(new Array(20).fill((Math.random()*100000) + 100));
 
 let histLength = random.integerInRange(500, 1000);
 let decendants = myth.geneology(histLength);
@@ -28,10 +29,10 @@ let begats = decendants.reduce((str, cur, i, arr) => {
 
     str += ` and all the days that ${cur.name} lived were ${cur.age} and ${pronoun} died.`;
 
-    str += 'And ';
+    str += ' And ';
   }
   else {
-    str += `And it came to pass, when men began to multiply on the face of the Earth...`;
+    str += ` And it came to pass, when men began to multiply on the face of the Earth...`;
   }
 
   return str;
