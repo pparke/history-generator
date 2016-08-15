@@ -1,0 +1,9 @@
+node_modules/
+output/
+dist/
+*.png
+*.jpg
+*.dat
+reference/
+.remote-sync.json
+npm-debug.log
