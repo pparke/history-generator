@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gnomes!</title>
+    <style media="screen">
+
+      body {
+        margin: 0;
+        background-color: #242335;
+      }
+      .container {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .inspector {
+        width: 100%;
+        background-color: #242335;
+        color: #fafafa;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="display" class="display">
+      </div>
+      <div id="inspector" class="inspector">
+        <h1 id="title">Inspector</h1>
+        <h2 id="name"></h2>
+        <h3 id="position"></h3>
+        <span id="health"></span>
+        <span id="mana"></span>
+        <span id="exp"></span>
+        <span id="gold"></span>
+        <h3 id="level"></h3>
+        <h3 id="class"></h3>
+        <h3 id="currentAction"></h3>
+      </div>
+    </div>
+    <script type="text/javascript" src="./assets/js/pixi.js"></script>
+    <script type="text/javascript" src="./gnomes.bundle.js"></script>
+  </body>
+</html>

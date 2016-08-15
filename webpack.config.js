@@ -5,7 +5,8 @@ const entries = {
   map:    path.join(__dirname,  'client/map.js'),
   myth:   path.join(__dirname,  'client/myth.js'),
   caves:  path.join(__dirname,  'client/caves.js'),
-  planet:  path.join(__dirname,  'client/planet.js')
+  planet:  path.join(__dirname,  'client/planet.js'),
+  gnomes: path.join(__dirname, 'client/gnomes.js')
 };
 
 const build = path.join(__dirname,  'dist');
