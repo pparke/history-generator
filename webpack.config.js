@@ -19,6 +19,11 @@ module.exports = {
     path: build,
     filename: '[name].bundle.js'
   },
+  watch: true,
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 1000
+  },
   // dev server options
   devServer: {
     host: '0.0.0.0',

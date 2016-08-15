@@ -2,6 +2,7 @@ node_modules/
 output/
 dist/assets/
 *.bundle.js
+dist/
 *.png
 *.jpg
 *.dat
