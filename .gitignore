@@ -1,6 +1,5 @@
 node_modules/
 output/
-dist/assets/
 *.bundle.js
 *.png
 *.jpg
