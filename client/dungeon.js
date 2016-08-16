@@ -248,6 +248,7 @@ function update () {
  * On ready
  */
 document.addEventListener('DOMContentLoaded', setup, false);
+setup();
 document.addEventListener('keydown', (e) => {
   e.preventDefault();
   keymap[e.keyCode] = true;
