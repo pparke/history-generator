@@ -29,14 +29,14 @@ class Entity {
 }
 
 class Event {
-  constrcutor () {
+  constructor () {
     this.type = '';
     this.effects = {};
   }
 }
 
 class Component {
-  constrcutor () {
+  constructor () {
     this.name = 'base';
   }
 }

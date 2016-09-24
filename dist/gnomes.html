@@ -24,6 +24,10 @@
         color: #fafafa;
         text-align: center;
       }
+
+      .stats {
+        margin: 0 auto;
+      }
     </style>
   </head>
   <body>
@@ -32,15 +36,33 @@
       </div>
       <div id="inspector" class="inspector">
         <h1 id="title">Inspector</h1>
-        <h2 id="name"></h2>
-        <h3 id="position"></h3>
-        <span id="health"></span>
-        <span id="mana"></span>
-        <span id="exp"></span>
-        <span id="gold"></span>
-        <h3 id="level"></h3>
-        <h3 id="class"></h3>
-        <h3 id="currentAction"></h3>
+        <h2>Name: <span id="name"></span></h2>
+        <h3>Position: <span id="position"></span></h3>
+        <table class="stats">
+          <tr style="color: red">
+            <td>&#x1f49c;</td>
+            <td id="health"></td>
+          </tr>
+          <tr style="color: lightblue">
+            <td>&#x1f709;</td>
+            <td id="mana"></td>
+          </tr>
+          <tr style="color: green">
+            <td>&#x1f702;</td>
+            <td id="exp"></td>
+          </tr>
+          <tr style="color: gold">
+            <td>&#x1f4b0;</td>
+            <td id="gold"></td>
+          </tr>
+          <tr style="color: pink">
+            <td>&#x1f356;</td>
+            <td id="food"></td>
+          </tr>
+        </table>
+        <h3>Level: <span id="level"></span></h3>
+        <h3>Class: <span id="class"></span></h3>
+        <h3>State: <span id="currentAction"></span></h3>
       </div>
     </div>
     <script type="text/javascript" src="./assets/js/pixi.js"></script>

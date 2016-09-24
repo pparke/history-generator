@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Brain</title>
+    <style media="screen">
+
+      body {
+        margin: 0;
+        background-color: #242335;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+      }
+
+      .row {
+        flex: 1;
+        text-align: center;
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+
+      .inspector {
+        width: 100%;
+        background-color: #242335;
+        color: #fafafa;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="inputs" class="row">
+
+      </div>
+      <div id="outputs" class="row">
+
+      </div>
+      <div id="controls" class="row">
+        <button id="update-button" type="button" name="update">Update</button>
+      </div>
+    </div>
+    <script type="text/javascript" src="./brain.bundle.js"></script>
+  </body>
+</html>

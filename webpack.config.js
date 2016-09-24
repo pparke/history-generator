@@ -11,7 +11,8 @@ const entries = {
   caves:  path.join(__dirname,  'client/caves.js'),
   planet:  path.join(__dirname,  'client/planet.js'),
   gnomes: path.join(__dirname, 'client/gnomes.js'),
-  dungeon: path.join(__dirname, 'client/dungeon.js')
+  dungeon: path.join(__dirname, 'client/dungeon.js'),
+  brain: path.join(__dirname, 'client/brain.js')
 };
 
 const build = path.join(__dirname,  'dist');
