@@ -1,63 +1,23 @@
 "use strict";
 
+const NameGen             = require('../lib/language/NameGen');
+const Tilemap             = require('../lib/ui/Tilemap');
+
+const nameGen = new NameGen();
 const width = 800;
 const height = 600;
 const tilesX = width/32;
 const tilesY = height/32;
-const atlas = 'assets/img/gnomes.json';
+const gnomeAtlas = 'assets/img/gnomes.json';
+const itemAtlas = 'assets/img/items.json';
+const timeInterval = 1000;
 
 const game = {
   renderer: null,
   stage: null,
   resources: null,
-  gnomes: []
-}
-
-class TileMap {
-  constructor (width, height, tileSize) {
-    this.tileSize = tileSize || 32;
-    this.width = width;
-    this.height = height;
-    this.tiles = new Array(this.width * this.height);
-    for (let i = 0; i < this.tiles.length; i++) {
-      this.tiles[i] = Object.create(null);
-    }
-  }
-
-  getOffset (x, y) {
-    return (y*this.width) + x;
-  }
-
-  getTile(x, y) {
-    let offset = this.getOffset(x, y);
-    return this.tiles[offset];
-  }
-
-  setTile (x, y, val) {
-    let offset = this.getOffset(x, y);
-    this.tiles[offset] = val;
-  }
-
-  pixelsToCoords (x, y) {
-    return [ x*this.tileSize, y*this.tileSize ];
-  }
-
-  northOf (x, y) {
-    return this.getTile(x, y-1);
-  }
-
-  eastOf (x, y) {
-    return this.getTile(x+1, y);
-  }
-
-  southOf (x, y) {
-    return this.getTile(x, y+1);
-  }
-
-  westOf (x, y) {
-    return this.getTile(x-1, y);
-  }
-
+  gnomes: [],
+  items: []
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -75,11 +35,12 @@ function setup () {
   game.stage = new PIXI.Container();
 
   // create a new tilemap
-  game.tileMap = new TileMap(Math.floor(width/32), Math.floor(height/32), 32);
+  game.tilemap = new Tilemap(Math.floor(width/32), Math.floor(height/32), 32);
 
   // load the textures we need
   let loadImages = new Promise(function (resolve, reject) {
-    PIXI.loader.add('gnomes', atlas)
+    PIXI.loader.add('gnomes', gnomeAtlas)
+    .add('items', itemAtlas)
     .on('error', function(err, loader, resources) {
       console.log(`Error: ${err} while loading resources ${resources}`);
       return reject(err);
@@ -95,19 +56,34 @@ function setup () {
 
     let numGnomes = 10;
     for (let i = 0; i < numGnomes; i++) {
-      let tileX = Math.floor(Math.random() * game.tileMap.width);
-      let tileY = Math.floor(Math.random() * game.tileMap.height);
+      let tileX = Math.floor(Math.random() * game.tilemap.width);
+      let tileY = Math.floor(Math.random() * game.tilemap.height);
       let x, y;
-      [x, y] = game.tileMap.pixelsToCoords(tileX, tileY);
+      [x, y] = game.tilemap.coordsToPixels(tileX, tileY);
 
       let gnome = gnomeFactory(game.resources.gnomes.textures['gnome'], x, y);
-      game.tileMap.getTile(tileX, tileY).occupant = gnome;
+      game.tilemap.getTile(tileX, tileY).addOccupant(gnome);
       game.stage.addChild(gnome);
       game.gnomes.push(gnome);
     }
 
+    let itemNames = Object.keys(game.resources.items.textures);
+    itemNames.forEach((name) => {
+      let item = new PIXI.Sprite(game.resources.items.textures[name]);
+      item.name = name;
+      let tileX = Math.floor(Math.random() * game.tilemap.width);
+      let tileY = Math.floor(Math.random() * game.tilemap.height);
+      let x, y;
+      [x, y] = game.tilemap.coordsToPixels(tileX, tileY);
+      item.position.x = x;
+      item.position.y = y;
+      game.tilemap.getTile(tileX, tileY).addItem(item);
+      game.stage.addChild(item);
+      game.items.push(item);
+    });
+
     // start main loop
-    animate();
+    step();
   });
 
 }
@@ -120,6 +96,7 @@ function getInspector () {
     mana: document.getElementById("mana"),
     exp: document.getElementById("exp"),
     gold: document.getElementById("gold"),
+    food: document.getElementById("food"),
     level: document.getElementById("level"),
     class: document.getElementById("class"),
     currentAction: document.getElementById("currentAction")
@@ -127,16 +104,18 @@ function getInspector () {
   return insp;
 }
 
+
 function gnomeFactory (texture, x, y) {
   let gnome = new PIXI.Sprite(texture);
-  gnome.name = `gnome-${x}-${y}`;
+  gnome.name = nameGen.male().short().generate();
   gnome.position.x = x;
   gnome.position.y = y;
   gnome.health = 10;
   gnome.mana = 1;
   gnome.exp = 0;
   gnome.gold = 100;
-  gnome.lvl = 1;
+  gnome.food = 100;
+  gnome.level = 1;
   gnome.class = 'gnome';
   gnome.attributes = {
     str: 10,
@@ -146,6 +125,7 @@ function gnomeFactory (texture, x, y) {
     int: 10,
     cha: 10
   };
+  gnome.inventory = [];
 
   gnome.interactive = true;
   gnome.on('mousedown', (e) => {
@@ -156,6 +136,7 @@ function gnomeFactory (texture, x, y) {
     game.inspector.mana.innerHTML = e.target.mana;
     game.inspector.exp.innerHTML = e.target.exp;
     game.inspector.gold.innerHTML = e.target.gold;
+    game.inspector.food.innerHTML = e.target.food;
     game.inspector.level.innerHTML = e.target.level;
     game.inspector.class.innerHTML = e.target.class;
     game.inspector.currentAction.innerHTML = e.target.currentAction;
@@ -223,16 +204,22 @@ function shuffle (array) {
 
 function updateGnomes (gnomes) {
   gnomes.forEach((gnome) => {
-
-  })
+    switch(gnome.currentAction) {
+      case 'move':
+        game.tilemap.move(gnome, 1, 0);
+        break;
+    }
+  });
 }
 
 /**
  * Main loop
  */
-function animate() {
+function step() {
     // start the timer for the next animation loop
-    requestAnimationFrame(animate);
+    setTimeout(step, timeInterval);
+
+    updateGnomes(game.gnomes);
 
     // this is the main render call that makes pixi draw your container and its children.
     game.renderer.render(game.stage);
