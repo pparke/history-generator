@@ -19,7 +19,7 @@ terra.caves(cavemap, width, height, 1, {
   overpopLimit: 6
 });
 // render to canvas
-display.render(canvas, cavemap, width, height, {renderKey: 'monochrome'});
+display.render(canvas, cavemap, width, height, {renderStyle: 'monochrome'});
 
 let fps = 10;
 let rate = 1000/fps;
@@ -36,7 +36,7 @@ function update () {
       deathLimit: 4,
       overpopLimit: 6
     });
-    display.render(canvas, cavemap, width, height, {renderKey: 'monochrome'});
+    display.render(canvas, cavemap, width, height, {renderStyle: 'monochrome'});
   }
   window.requestAnimationFrame(update);
 }
