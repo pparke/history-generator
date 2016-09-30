@@ -204,11 +204,15 @@ function shuffle (array) {
 
 function updateGnomes (gnomes) {
   gnomes.forEach((gnome) => {
+    // perform actions
     switch(gnome.currentAction) {
       case 'move':
         game.tilemap.move(gnome, 1, 0);
         break;
     }
+
+    // pickup items
+    game.tilemap.pickup(gnome);
   });
 }
 
