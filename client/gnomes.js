@@ -1,7 +1,7 @@
 "use strict";
 
 const NameGen             = require('../lib/language/NameGen');
-const Tilemap             = require('../lib/ui/Tilemap');
+const Tilemap             = require('../lib/engine/Tilemap');
 
 const nameGen = new NameGen();
 const width = 800;

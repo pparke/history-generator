@@ -11,8 +11,8 @@ describe('Atmosphere', function() {
   describe('#insolation', function () {
     it('should give the total sun for the given day and latitude', function () {
       let stefanBoltz = 5.6704E-8;
-      for (let d = 0; d <= 90; d += 1) {
-        let s = atmo.insolation(100, d);
+      for (let lat = 0; lat <= 90; lat += 1) {
+        let s = atmo.insolation(100, lat);
 
         // convert MJm to kWh
         s /= 3.6;
@@ -21,7 +21,7 @@ describe('Atmosphere', function() {
         // convert to temperature in C
         let temp = (Math.pow(s/(stefanBoltz*24), 0.25) - 273.15);
 
-        console.log(`latitude ${d}:\t\t${temp}`);
+        console.log(`latitude ${lat}:\t\t${temp}`);
       }
       /*
       assert.equal(arr.length, width*height, `length is not equal to ${width*height}`);
@@ -31,16 +31,20 @@ describe('Atmosphere', function() {
     });
   });
 
-  describe('#temperature', function () {
+  describe('#solargain', function () {
     it('should produce an array with temperature values in each element', function () {
-      let width = 10;
-      let height = 30;
-      let arr = new Array(width*height);
-      atmo.temperature(arr, width, height);
+      const width = 10;
+      const height = 30;
+      const lat = 33
+      const arr = new Array(width*height).fill(0);
+
+      atmo.solargain(arr, width, height, lat);
+
       arr.forEach((elem, i) => {
-        let coords = helpers.coords(i, width);
-        if (coords[0] == 0) {
-          console.log(`Latitude: ${55 - coords[1]} Temp:\t${elem}`)
+        const [x, y] = helpers.coords(i, width);
+        if (x == 0) {
+          const temp = atmo.MJtoC(elem);
+          console.log(`Latitude: ${lat - y} Temp:\t${temp}`)
         }
       })
     })

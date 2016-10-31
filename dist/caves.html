@@ -6,6 +6,29 @@
   </head>
   <body>
     <canvas id="canvas" width="256" height="256"></canvas>
+    <br>
+    <button type="button" id="restart">Restart</button>
+    <button type="button" id="reset">Reset</button>
+    <button type="button" id="pause">Pause</button>
+    <br>
+    <label for="fps">FPS</label>
+    <input type="range" id="fps" name="fps" value="10" max="60" min="1" step="1">
+    <br>
+    <label for="underpopLim">Underpop Limit</label>
+    <input type="number" id="underpopLim" name="underpopLim" value="0.25" max="1" min="0" step="0.01">
+    <label for="overpopLim">Overpop Modifier</label>
+    <input type="number" id="overpopLim" name="overpopLim" value="0.66" max="1" min="0" step="0.01">
+    <br>
+    <label for="underpopMod">Underpop Modifier</label>
+    <input type="number" id="underpopMod" name="underpopMod" value="0.6" max="1.499" min="0" step="0.001">
+    <label for="overpopMod">Overpop Modifier</label>
+    <input type="number" id="overpopMod" name="overpopMod" value="1.3" max="1.499" min="0" step="0.001">
+    <br>
+    <label for="rules">Rules</label>
+    <br>
+    <textarea name="rules" id="rules" rows="8" cols="40"></textarea>
+    <br>
+    <button type="button" id="setRules" name="setRules">Set Rules</button>
 
     <script type="text/javascript" src="./caves.bundle.js"></script>
   </body>
